@@ -21,13 +21,14 @@ class CreateToDoViewController: UIViewController {
     }
     
     @IBAction func addTapped(_ sender: Any) {
-        let newToDo = ToDo()
-        newToDo.important = importantSwitch.isOn
-        if let name = nameTextfield.text {
-            newToDo.name = name
+        if let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext{
+            let newToDo = ToDoCoreData(context: context)
+            newToDo.important = importantSwitch.isOn
+            if let name = nameTextfield.text {
+                newToDo.name = name
+            }
         }
-        toDoTableVC?.toDos.append(newToDo)
-        toDoTableVC?.tableView.reloadData()
+        
         navigationController?.popViewController(animated: true)
     }
 
